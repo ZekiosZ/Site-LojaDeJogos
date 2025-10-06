@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "The Legend of Code",
+    "price": 199.9,
+    "platform": "PC",
+    "genre": "RPG",
+    "stock": 8,
+    "description": "RPG indie para devs: lute contra bugs e chefes memory-leak.",
+    "imageUrl": "",
+    "createdAt": "2025-10-06T00:00:00.000Z",
+    "updatedAt": "2025-10-06T00:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "title": "Speed Runner 2049",
+    "price": 149.9,
+    "platform": "PS5",
+    "genre": "Ação",
+    "stock": 12,
+    "description": "Corridas futuristas em alta velocidade com modo carreira.",
+    "imageUrl": "",
+    "createdAt": "2025-10-06T00:00:00.000Z",
+    "updatedAt": "2025-10-06T00:00:00.000Z"
+  },
+  {
+    "id": "3",
+    "title": "Galaxy Tactics",
+    "price": 99.9,
+    "platform": "Xbox",
+    "genre": "Estratégia",
+    "stock": 5,
+    "description": "Comande frotas e conquiste sistemas estelares em turnos.",
+    "imageUrl": "",
+    "createdAt": "2025-10-06T00:00:00.000Z",
+    "updatedAt": "2025-10-06T00:00:00.000Z"
+  }
+]
