@@ -7,6 +7,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs').promises;
 const path = require('path');
+const { v4: uuidv4 } = require('uuid'); // ✅ importação do uuid
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -35,11 +36,9 @@ async function writeDB(items) {
   await fs.writeFile(DB_PATH, JSON.stringify(items, null, 2));
 }
 
-// Gera ID sem libs: autoincremental
-async function nextId() {
-  const items = await readDB();
-  const max = items.reduce((m, p) => Math.max(m, Number(p.id) || 0), 0);
-  return String(max + 1);
+// ✅ Gera ID com UUID
+function nextId() {
+  return uuidv4();
 }
 
 // Validação simples
@@ -49,14 +48,36 @@ function validateProduct(payload, isUpdate = false) {
     if (!payload.title) errors.push('Título é obrigatório');
     if (payload.price == null || isNaN(Number(payload.price))) errors.push('Preço é obrigatório e numérico');
     if (!payload.platform) errors.push('Plataforma é um campo obrigatório');
-    if (!payload.genre) errors.push('Genero é um campo obrigatório');
-    if (payload.stock == null || isNaN(Number(payload.stock))) errors.push('Stock é um campo obrigatório e numérico');
-    if (!payload.description) errors.push('Descrição e um campo é obrigatório');
+    if (!payload.genre) errors.push('Gênero é um campo obrigatório');
+    if (payload.stock == null || isNaN(Number(payload.stock))) errors.push('Estoque é um campo obrigatório e numérico');
+    if (!payload.description) errors.push('Descrição é um campo obrigatório');
   } else {
     if ('price' in payload && isNaN(Number(payload.price))) errors.push('O preço deve ser numérico');
     if ('stock' in payload && isNaN(Number(payload.stock))) errors.push('O estoque deve ser numérico');
   }
   return errors;
+}
+
+// ✅ LOGIN ADMIN
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = '12345';
+const ADMIN_TOKEN = uuidv4(); // token único gerado ao iniciar
+
+// Rota de login
+app.post('/api/login', (req, res) => {
+  const { user, pass } = req.body;
+  if (user === ADMIN_USER && pass === ADMIN_PASS) {
+    return res.json({ token: ADMIN_TOKEN });
+  }
+  res.status(401).json({ error: 'Credenciais inválidas' });
+});
+
+// Middleware para verificar token
+function checkAdmin(req, res, next) {
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  if (token === ADMIN_TOKEN) return next();
+  return res.status(403).json({ error: 'Acesso negado. Token inválido ou ausente.' });
 }
 
 // Healthcheck
@@ -88,14 +109,14 @@ app.get('/api/products/:id', async (req, res) => {
   res.json(found);
 });
 
-// Criar
-app.post('/api/products', async (req, res) => {
+// Criar (protegido)
+app.post('/api/products', checkAdmin, async (req, res) => {
   const payload = req.body || {};
   const errors = validateProduct(payload, false);
   if (errors.length) return res.status(400).json({ errors });
 
   const items = await readDB();
-  const id = await nextId();
+  const id = nextId();
   const now = new Date().toISOString();
 
   const product = {
@@ -116,8 +137,8 @@ app.post('/api/products', async (req, res) => {
   res.status(201).json(product);
 });
 
-// Atualizar total (PUT)
-app.put('/api/products/:id', async (req, res) => {
+// Atualizar total (protegido)
+app.put('/api/products/:id', checkAdmin, async (req, res) => {
   const payload = req.body || {};
   const errors = validateProduct(payload, false);
   if (errors.length) return res.status(400).json({ errors });
@@ -139,8 +160,8 @@ app.put('/api/products/:id', async (req, res) => {
   res.json(items[idx]);
 });
 
-// Atualização parcial (PATCH)
-app.patch('/api/products/:id', async (req, res) => {
+// Atualização parcial/usado pra ajustes rápidos(protegido)
+app.patch('/api/products/:id', checkAdmin, async (req, res) => {
   const payload = req.body || {};
   const errors = validateProduct(payload, true);
   if (errors.length) return res.status(400).json({ errors });
@@ -159,8 +180,8 @@ app.patch('/api/products/:id', async (req, res) => {
   res.json(items[idx]);
 });
 
-// Deletar
-app.delete('/api/products/:id', async (req, res) => {
+// Deletar (protegido)
+app.delete('/api/products/:id', checkAdmin, async (req, res) => {
   const items = await readDB();
   const idx = items.findIndex(p => String(p.id) === String(req.params.id));
   if (idx === -1) return res.status(404).json({ error: 'Produto não encontrado' });
@@ -172,4 +193,5 @@ app.delete('/api/products/:id', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`API rodando em http://localhost:${PORT}`);
+  console.log(`Token de admin atual: ${ADMIN_TOKEN}`);
 });
