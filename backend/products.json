@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": "07558de5-79de-4ae7-9390-61b54728f0ad",
     "title": "The Legend of Code",
     "price": 199.9,
     "platform": "PC",
@@ -12,7 +12,7 @@
     "updatedAt": "2025-10-06T00:00:00.000Z"
   },
   {
-    "id": "2",
+    "id": "9d98deae-c87d-44b8-b513-0b2b14f07991",
     "title": "Speed Runner 2049",
     "price": 149.9,
     "platform": "PS5",
@@ -24,7 +24,7 @@
     "updatedAt": "2025-10-06T00:00:00.000Z"
   },
   {
-    "id": "3",
+    "id": "1a53a28b-7e96-47c5-8a8c-fb5c665f8bba",
     "title": "Galaxy Tactics",
     "price": 99.9,
     "platform": "Xbox",
