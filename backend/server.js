@@ -1,13 +1,8 @@
-// Como rodar:
-//   npm init -y
-//   npm i express cors
-//   node server.js
-
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs').promises;
 const path = require('path');
-const { v4: uuidv4 } = require('uuid'); // ✅ importação do uuid
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,7 +31,7 @@ async function writeDB(items) {
   await fs.writeFile(DB_PATH, JSON.stringify(items, null, 2));
 }
 
-// ✅ Gera ID com UUID
+// Gera ID com UUID
 function nextId() {
   return uuidv4();
 }
@@ -58,30 +53,10 @@ function validateProduct(payload, isUpdate = false) {
   return errors;
 }
 
-// ✅ LOGIN ADMIN
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = '12345';
-const ADMIN_TOKEN = uuidv4(); // token único gerado ao iniciar
-
-// Rota de login
-app.post('/api/login', (req, res) => {
-  const { user, pass } = req.body;
-  if (user === ADMIN_USER && pass === ADMIN_PASS) {
-    return res.json({ token: ADMIN_TOKEN });
-  }
-  res.status(401).json({ error: 'Credenciais inválidas' });
-});
-
-// Middleware para verificar token
-function checkAdmin(req, res, next) {
-  const authHeader = req.headers.authorization;
-  const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
-  if (token === ADMIN_TOKEN) return next();
-  return res.status(403).json({ error: 'Acesso negado. Token inválido ou ausente.' });
-}
-
 // Healthcheck
-app.get('/api/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
+app.get('/api/health', (req, res) =>
+  res.json({ ok: true, time: new Date().toISOString() })
+);
 
 // Listar (suporta ?q=, ?platform=, ?genre=)
 app.get('/api/products', async (req, res) => {
@@ -90,13 +65,20 @@ app.get('/api/products', async (req, res) => {
 
   if (q) {
     const k = String(q).toLowerCase();
-    items = items.filter(p =>
-      (p.title || '').toLowerCase().includes(k) ||
-      (p.description || '').toLowerCase().includes(k)
+    items = items.filter(
+      (p) =>
+        (p.title || '').toLowerCase().includes(k) ||
+        (p.description || '').toLowerCase().includes(k)
     );
   }
-  if (platform) items = items.filter(p => String(p.platform).toLowerCase() === String(platform).toLowerCase());
-  if (genre) items = items.filter(p => String(p.genre).toLowerCase() === String(genre).toLowerCase());
+  if (platform)
+    items = items.filter(
+      (p) => String(p.platform).toLowerCase() === String(platform).toLowerCase()
+    );
+  if (genre)
+    items = items.filter(
+      (p) => String(p.genre).toLowerCase() === String(genre).toLowerCase()
+    );
 
   res.json(items);
 });
@@ -104,13 +86,13 @@ app.get('/api/products', async (req, res) => {
 // Obter por id
 app.get('/api/products/:id', async (req, res) => {
   const items = await readDB();
-  const found = items.find(p => String(p.id) === String(req.params.id));
+  const found = items.find((p) => String(p.id) === String(req.params.id));
   if (!found) return res.status(404).json({ error: 'Produto não encontrado' });
   res.json(found);
 });
 
-// Criar (protegido)
-app.post('/api/products', checkAdmin, async (req, res) => {
+// Criar produto
+app.post('/api/products', async (req, res) => {
   const payload = req.body || {};
   const errors = validateProduct(payload, false);
   if (errors.length) return res.status(400).json({ errors });
@@ -129,7 +111,7 @@ app.post('/api/products', checkAdmin, async (req, res) => {
     description: String(payload.description),
     imageUrl: payload.imageUrl ? String(payload.imageUrl) : '',
     createdAt: now,
-    updatedAt: now
+    updatedAt: now,
   };
 
   items.push(product);
@@ -137,14 +119,14 @@ app.post('/api/products', checkAdmin, async (req, res) => {
   res.status(201).json(product);
 });
 
-// Atualizar total (protegido)
-app.put('/api/products/:id', checkAdmin, async (req, res) => {
+// Atualizar produto (PUT)
+app.put('/api/products/:id', async (req, res) => {
   const payload = req.body || {};
   const errors = validateProduct(payload, false);
   if (errors.length) return res.status(400).json({ errors });
 
   const items = await readDB();
-  const idx = items.findIndex(p => String(p.id) === String(req.params.id));
+  const idx = items.findIndex((p) => String(p.id) === String(req.params.id));
   if (idx === -1) return res.status(404).json({ error: 'Produto não encontrado' });
 
   const now = new Date().toISOString();
@@ -153,21 +135,21 @@ app.put('/api/products/:id', checkAdmin, async (req, res) => {
     ...payload,
     price: Number(payload.price),
     stock: Number(payload.stock),
-    updatedAt: now
+    updatedAt: now,
   };
 
   await writeDB(items);
   res.json(items[idx]);
 });
 
-// Atualização parcial/usado pra ajustes rápidos(protegido)
-app.patch('/api/products/:id', checkAdmin, async (req, res) => {
+// Atualização parcial (PATCH)
+app.patch('/api/products/:id', async (req, res) => {
   const payload = req.body || {};
   const errors = validateProduct(payload, true);
   if (errors.length) return res.status(400).json({ errors });
 
   const items = await readDB();
-  const idx = items.findIndex(p => String(p.id) === String(req.params.id));
+  const idx = items.findIndex((p) => String(p.id) === String(req.params.id));
   if (idx === -1) return res.status(404).json({ error: 'Produto não encontrado' });
 
   const now = new Date().toISOString();
@@ -180,10 +162,10 @@ app.patch('/api/products/:id', checkAdmin, async (req, res) => {
   res.json(items[idx]);
 });
 
-// Deletar (protegido)
-app.delete('/api/products/:id', checkAdmin, async (req, res) => {
+// Deletar produto
+app.delete('/api/products/:id', async (req, res) => {
   const items = await readDB();
-  const idx = items.findIndex(p => String(p.id) === String(req.params.id));
+  const idx = items.findIndex((p) => String(p.id) === String(req.params.id));
   if (idx === -1) return res.status(404).json({ error: 'Produto não encontrado' });
 
   const removed = items.splice(idx, 1)[0];
@@ -193,5 +175,4 @@ app.delete('/api/products/:id', checkAdmin, async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`API rodando em http://localhost:${PORT}`);
-  console.log(`Token de admin atual: ${ADMIN_TOKEN}`);
 });
