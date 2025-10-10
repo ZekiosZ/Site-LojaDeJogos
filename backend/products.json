@@ -5,11 +5,11 @@
     "price": 199.9,
     "platform": "PC",
     "genre": "RPG",
-    "stock": 8,
+    "stock": 9,
     "description": "RPG indie para devs: lute contra bugs e chefes memory-leak.",
     "imageUrl": "",
     "createdAt": "2025-10-06T00:00:00.000Z",
-    "updatedAt": "2025-10-06T00:00:00.000Z"
+    "updatedAt": "2025-10-10T12:20:53.410Z"
   },
   {
     "id": "9d98deae-c87d-44b8-b513-0b2b14f07991",
