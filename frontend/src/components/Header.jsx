@@ -1,23 +1,71 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom';
 
-function Header(){
+function Header() {
   return (
-    <header style={{borderBottom:'1px solid #e5e7eb'}}>
-      <div style={{maxWidth:960, margin:'0 auto', padding:'16px', display:'flex', gap:24, alignItems:'center'}}>
-        <Link to="/" style={{fontSize:18, fontWeight:700}}>GameStore</Link>
-        <nav style={{display:'flex', gap:12}}>
-          <NavLink to="/" end>Home</NavLink>
-          <NavLink to="/products">Produtos</NavLink>
-          <NavLink to="/sobre">Sobre</NavLink>
-          <NavLink to="/contato">Contato</NavLink>
+    <header className="bg-white shadow-md">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center">
+        {/* Logo */}
+        <Link to="/" className="text-2xl font-bold text-gray-800">
+          GameStore
+        </Link>
+
+        {/* Navegação */}
+        <nav className="flex gap-6 ml-10">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "text-gray-900 font-semibold border-b-2 border-red-500"
+                : "text-gray-600 hover:text-gray-900 transition-colors"
+            }
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/products"
+            className={({ isActive }) =>
+              isActive
+                ? "text-gray-900 font-semibold border-b-2 border-red-500"
+                : "text-gray-600 hover:text-gray-900 transition-colors"
+            }
+          >
+            Produtos
+          </NavLink>
+          <NavLink
+            to="/sobre"
+            className={({ isActive }) =>
+              isActive
+                ? "text-gray-900 font-semibold border-b-2 border-red-500"
+                : "text-gray-600 hover:text-gray-900 transition-colors"
+            }
+          >
+            Sobre
+          </NavLink>
+          <NavLink
+            to="/contato"
+            className={({ isActive }) =>
+              isActive
+                ? "text-gray-900 font-semibold border-b-2 border-red-500"
+                : "text-gray-600 hover:text-gray-900 transition-colors"
+            }
+          >
+            Contato
+          </NavLink>
         </nav>
-        <div style={{marginLeft:'auto'}}>
-          <NavLink to="/products/new" style={{padding:'6px 10px', border:'1px solid #e5e7eb', borderRadius:8}}>
+
+        {/* Botão Novo Produto */}
+        <div className="ml-auto">
+          <NavLink
+            to="/products/new"
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-red-500 hover:text-white transition-colors font-medium"
+          >
             Novo Produto
           </NavLink>
         </div>
       </div>
     </header>
-  )
+  );
 }
-export default Header
+
+export default Header;
