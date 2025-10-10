@@ -61,7 +61,7 @@ function Home() {
       {/* Seção de destaque com imagem */}
       <section className="bg-gray-100 py-20 px-6 flex flex-col md:flex-row items-center gap-10 max-w-6xl mx-auto rounded-xl shadow-lg">
         <img
-          src="/images/banner-gamer.jpg"
+          src="https://images.unsplash.com/photo-1597840900616-664e930c29df?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTJ8fGdhbWVzfGVufDB8fDB8fHww"
           alt="Banner gamer"
           className="w-full md:w-1/2 rounded-lg object-cover shadow-md"
         />
