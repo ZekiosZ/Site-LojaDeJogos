@@ -78,6 +78,7 @@ function ProductForm() {
     setLoading(true);
     setErrors([]);
     try {
+      console.log('Tentando deletar:', id);
       const res = await fetch(`${BASE_URL}/products/${id}`, { method: 'DELETE' });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -112,7 +113,7 @@ function ProductForm() {
         <input name="platform" value={form.platform} onChange={onChange} placeholder="Plataforma (PC, PS5...)" required />
         <input name="genre" value={form.genre} onChange={onChange} placeholder="Gênero (RPG, FPS...)" required />
         <input name="stock" value={form.stock} onChange={onChange} placeholder="Estoque" required />
-        <input name="imageUrl" value={form.imageUrl} onChange={onChange} placeholder="URL da imagem (opcional)" />
+        <input name="imageUrl" value={form.imageUrl} onChange={onChange} placeholder="URL da imagem" />
         <textarea name="description" value={form.description} onChange={onChange} placeholder="Descrição" rows="4" required />
         <div style={{ display: 'flex', gap: 8 }}>
           <button disabled={loading}>{isEdit ? 'Salvar' : 'Criar'}</button>
