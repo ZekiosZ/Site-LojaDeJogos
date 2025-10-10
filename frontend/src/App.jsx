@@ -5,6 +5,7 @@ import Products from './components/Products'
 import ProductForm from './components/ProductForm'
 import Sobre from './components/Sobre'
 import Contato from './components/Contato'
+import Login from './components/Login'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
             <Route path="/products/:id/edit" element={<ProductForm />} />
             <Route path="/sobre" element={<Sobre />} />
             <Route path="/contato" element={<Contato />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </main>
       </div>

@@ -173,6 +173,31 @@ app.delete('/api/products/:id', async (req, res) => {
   res.json({ deleted: removed.id });
 });
 
+// Rota de login
+app.post("/login", async (req, res) => {
+  const { email, senha } = req.body;
+  try {
+    if (!email || !senha) {
+      return res.status(400).json({ error: "Preencha todos os campos." });
+    }
+    const usuario = await User.findOne({ email });
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuário não encontrado." });
+    }
+
+    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
+    if (!senhaCorreta) {
+      return res.status(401).json({ error: "Senha incorreta." });
+    }
+
+    const token = jwt.sign({ id: usuario._id }, "segredo", { expiresIn: "1h" });
+    res.json({ message: "Login realizado com sucesso!", token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro interno, tente novamente." });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`API rodando em http://localhost:${PORT}`);
 });
