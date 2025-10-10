@@ -38,7 +38,7 @@ function Sobre() {
       <div className="max-w-6xl mx-auto mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow">
           <img
-            src="https://images.unsplash.com/photo-1605902711622-cfb43c443f2e?auto=format&fit=crop&w=400&q=80"
+            src="https://images.unsplash.com/photo-1720019008736-256302fe567e?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dmFyaWVkYWRlJTIwZGUlMjBqb2dvc3xlbnwwfHwwfHx8MA%3D%3D"
             alt="Jogos"
             className="mx-auto mb-4 w-32 h-32 object-cover rounded-full"
           />
