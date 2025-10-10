@@ -1,38 +1,50 @@
 [
   {
     "id": "07558de5-79de-4ae7-9390-61b54728f0ad",
-    "title": "The Legend of Code",
+    "title": "The Legend of Zelda",
     "price": 199.9,
-    "platform": "PC",
+    "platform": "Nintendo Switch",
     "genre": "RPG",
     "stock": 9,
-    "description": "RPG indie para devs: lute contra bugs e chefes memory-leak.",
-    "imageUrl": "",
+    "description": "Uma lendária série de ação e aventura, onde Link embarca em jornadas épicas para salvar o reino de Hyrule e enfrentar o mal que ameaça o mundo.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg",
     "createdAt": "2025-10-06T00:00:00.000Z",
-    "updatedAt": "2025-10-10T12:20:53.410Z"
+    "updatedAt": "2025-10-10T20:48:22.219Z"
   },
   {
     "id": "9d98deae-c87d-44b8-b513-0b2b14f07991",
-    "title": "Speed Runner 2049",
+    "title": "Need for Speed HEAT",
     "price": 149.9,
     "platform": "PS5",
     "genre": "Ação",
     "stock": 12,
-    "description": "Corridas futuristas em alta velocidade com modo carreira.",
-    "imageUrl": "",
+    "description": "Corridas intensas em mundo aberto entre o dia e a noite, onde o jogador desafia a polícia e constrói sua reputação nas ruas de Palm City.",
+    "imageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202210/3121/XemhVDBuAEVrQXUkJF57ZsdX.jpg",
     "createdAt": "2025-10-06T00:00:00.000Z",
-    "updatedAt": "2025-10-06T00:00:00.000Z"
+    "updatedAt": "2025-10-10T20:47:36.842Z"
   },
   {
     "id": "1a53a28b-7e96-47c5-8a8c-fb5c665f8bba",
-    "title": "Galaxy Tactics",
+    "title": "Halo 4",
     "price": 99.9,
     "platform": "Xbox",
-    "genre": "Estratégia",
+    "genre": "Ação",
     "stock": 5,
     "description": "Comande frotas e conquiste sistemas estelares em turnos.",
-    "imageUrl": "",
+    "imageUrl": "https://store-images.s-microsoft.com/image/apps.34314.13744163056196112.102a8eeb-4ff9-477f-bace-a811d3daf9da.a7091d92-05e6-43e3-8467-2f8332ab073e?q=90&w=480&h=270",
     "createdAt": "2025-10-06T00:00:00.000Z",
-    "updatedAt": "2025-10-06T00:00:00.000Z"
+    "updatedAt": "2025-10-10T20:49:43.353Z"
+  },
+  {
+    "id": "e2132da1-ae2a-43cc-8ba8-9a6e5592b1af",
+    "title": "Five Nights at Freddy's Into The Pit",
+    "price": 60,
+    "platform": "PC",
+    "genre": "Terror",
+    "stock": 5,
+    "description": "Uma história sombria inspirada no universo de FNAF, onde um garoto descobre um poço misterioso que o transporta para o passado, revelando segredos macabros dos animatrônicos.",
+    "imageUrl": "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/ncom/software/switch/70010000071079/d08fc33e504e0bb244d31c38d1dfa15e1b8465c4992d57a989e31f1ed3bbc026",
+    "createdAt": "2025-10-10T20:51:33.323Z",
+    "updatedAt": "2025-10-10T20:51:46.310Z"
   }
 ]
