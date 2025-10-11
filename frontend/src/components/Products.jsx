@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
+
 const BASE_URL = 'http://localhost:3000/api';
 
 async function listProducts(q) {
@@ -157,7 +158,9 @@ function Products() {
                   </Link>
                 ) : (
                   <button
-                    onClick={() => alert('Compra realizada com sucesso!')}
+                    onClick={() => deleteProduct(p.id).then(() => {
+                      setItems(items.filter(item => item.id !== p.id));
+                    })}
                     className="
                       inline-flex items-center rounded-xl border border-gray-300
                       px-4 py-2.5 text-lg font-medium text-gray-800
@@ -166,16 +169,6 @@ function Products() {
                     "
                   >
                     Comprar
-                  </button>
-                )}
-
-                {/* Deletar só aparece no modo admin */}
-                {isAdmin && (
-                  <button
-                    onClick={() => alert(`Produto ${p.title} deletado (simulação)`)}
-                    className="border border-red-400 text-red-600 px-4 py-2.5 rounded-xl hover:bg-red-50 transition-all"
-                  >
-                    Deletar
                   </button>
                 )}
               </div>
